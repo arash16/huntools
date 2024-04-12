@@ -14,12 +14,12 @@ RUN apt-get -y install \
   ruby pv lynx xvfb medusa chromium-browser chromium \
   && apt-get clean
 
-RUN git config --global core.compression 9
-RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
-  -p https://github.com/zsh-users/zsh-autosuggestions \
-  -p https://github.com/zdharma-continuum/fast-syntax-highlighting \
-  -p https://github.com/marlonrichert/zsh-autocomplete \
-  -x
+RUN git config --global core.compression 9 \
+  && sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
+    -p https://github.com/zsh-users/zsh-autosuggestions \
+    -p https://github.com/zdharma-continuum/fast-syntax-highlighting \
+    -p https://github.com/marlonrichert/zsh-autocomplete \
+    -x
 
 COPY install.sh /tmp/install.sh
 RUN /tmp/install.sh

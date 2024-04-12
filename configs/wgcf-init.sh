@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -e
 
+if [ `grep -c "162.159.192.1 engage.cloudflareclient.com" /etc/hosts` == '0' ]; then
+  echo "162.159.192.1 engage.cloudflareclient.com" >> /etc/hosts
+fi
+
 if [ ! -e "/etc/wireguard/wg0.conf" ]; then
   if [ ! -e "wgcf-account.toml" ]; then
     wgcf register --accept-tos

@@ -38,6 +38,9 @@ tar -C /usr/local -xzf go.tar.gz
 export PATH=$PATH:/usr/local/go/bin
 # =============================================================================
 
+mkdir -p /wgcf
+curl -fsSL git.io/wgcf.sh | bash
+
 cu_install mikefarah/yq!
 cu_install jpillora/chisel!
 gh_deb lsd-rs/lsd
