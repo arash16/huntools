@@ -17,6 +17,7 @@ RUN apt-get -y install \
 RUN git config --global core.compression 9 \
   && sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
     -p https://github.com/zsh-users/zsh-autosuggestions \
+    -p https://github.com/zsh-users/zsh-syntax-highlighting \
     -p https://github.com/zdharma-continuum/fast-syntax-highlighting \
     -p https://github.com/marlonrichert/zsh-autocomplete \
     -x

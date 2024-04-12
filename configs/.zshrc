@@ -12,7 +12,7 @@ export NNN_PLUG='z:autojump;f:fzcd;d:diffs;p:preview-tui;e:suedit'
 # getplugs / dups
 
 # Configure FZF
-export FZF_BASE=/opt/fzf/bin/fzf
+export FZF_BASE=/opt/fzf
 export FZF_DEFAULT_COMMAND="fd --strip-cwd-prefix"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND -d 5 --type d"
 export FZF_ALT_C_OPTS="--preview 'lsd --tree {}'"
@@ -82,7 +82,7 @@ zstyle ':completion:*:*:docker-*:*' option-stacking yes
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   fzf ripgrep z git
-  zsh-autocomplete zsh-autosuggestions fast-syntax-highlighting
+  zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting
   docker docker-compose
 )
 source $ZSH/oh-my-zsh.sh

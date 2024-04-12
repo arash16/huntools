@@ -6,6 +6,7 @@ if [ `grep -c "162.159.192.1 engage.cloudflareclient.com" /etc/hosts` == '0' ]; 
 fi
 
 if [ ! -e "/etc/wireguard/wg0.conf" ]; then
+  cd /wgcf
   if [ ! -e "wgcf-account.toml" ]; then
     wgcf register --accept-tos
   fi
@@ -28,4 +29,5 @@ if [ ! -e "/etc/wireguard/wg0.conf" ]; then
   fi
 
   cp wgcf-profile.conf /etc/wireguard/wg0.conf
+  cd -
 fi

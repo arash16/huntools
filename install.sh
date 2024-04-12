@@ -112,3 +112,4 @@ curl -Lo onelistforallmicro.txt https://raw.githubusercontent.com/six2dez/OneLis
 cp -r ~/.oh-my-zsh /opt/omz
 rm -rf /root /tmp
 mkdir -p /root/.local /tmp
+chsh -s $(which zsh)
