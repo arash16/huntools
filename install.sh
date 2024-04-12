@@ -1,18 +1,17 @@
 #!/bin/bash -e
 set -xe
-
-export PATH="/opt/asdf/bin:/opt/asdf/shims:$PATH"
-git config --global core.compression 9
 cd /tmp
+git config --global core.compression 9
 
 function cu_install() {
   curl https://i.jpillora.com/$1 | bash
 }
 
+CPU=$(uname -m)
+[[ "$CPU" == "x86_64" ]] && CPU=amd64
+
 function gh_deb() {
   echo; echo "##### $1 #####"
-  CPU=$(uname -m)
-  [[ "$CPU" == "x86_64" ]] && CPU=amd64
   curl -s https://api.github.com/repos/$1/releases/latest \
   | grep -m1 "browser_download_url${2:-".*${CPU}.*deb"}" \
   | cut -d : -f 2,3 \
@@ -31,6 +30,14 @@ function gh_pull() {
 
 # =============================================================================
 
+curl -fLS install-node.vercel.app/lts | bash -s -- --yes
+curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
+curl -Lo go.tar.gz https://go.dev/dl/go1.22.2.linux-${CPU}.tar.gz
+tar -C /usr/local -xzf go.tar.gz
+export PATH=$PATH:/usr/local/go/bin
+
+# =============================================================================
+
 cu_install lsd-rs/lsd!
 cu_install sharkdp/bat!
 cu_install sharkdp/fd!
@@ -41,16 +48,6 @@ cu_install ajeetdsouza/zoxide!
 cu_install BurntSushi/ripgrep!?as=rg
 gh_pull junegunn/fzf /opt/fzf && /opt/fzf/install
 gh_deb httpie/cli '.*deb'
-
-gh_pull asdf-vm/asdf "/opt/asdf"
-ln -s /opt/asdf/bin/asdf /usr/local/bin/asdf
-asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-asdf plugin add rust https://github.com/asdf-community/asdf-rust.git
-asdf plugin add golang https://github.com/asdf-community/asdf-golang.git
-asdf install nodejs latest
-asdf install golang latest
-asdf global nodejs latest
-asdf global golang latest
 
 # =============================================================================
 
@@ -64,7 +61,6 @@ go install -v github.com/denandz/sourcemapper@latest
 gh_pull sqlmapproject/sqlmap /opt/sqlmap
 cu_install owasp-amass/amass!
 cu_install epi052/feroxbuster!
-
 
 mkdir /list
 cd /list

@@ -11,7 +11,7 @@ RUN apt-get -y install \
   dnsutils inetutils-ping \
   && apt-get clean
 
-# node/go/rust minio
+# minio
 
 RUN git config --global core.compression 9
 RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \

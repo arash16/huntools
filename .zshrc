@@ -1,4 +1,4 @@
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:/usr/local/go/bin:$PATH"
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -81,7 +81,7 @@ zstyle ':completion:*:*:docker-*:*' option-stacking yes
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  fzf ripgrep z git asdf
+  fzf ripgrep z git
   zsh-autocomplete zsh-autosuggestions fast-syntax-highlighting
   docker docker-compose
 )
