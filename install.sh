@@ -31,12 +31,15 @@ function gh_pull() {
 
 # =============================================================================
 
+# curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
 curl -fLS install-node.vercel.app/lts | bash -s -- --yes
-curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
 curl -Lo go.tar.gz https://go.dev/dl/go1.22.2.linux-${CPU}.tar.gz
 tar -C /usr/local -xzf go.tar.gz
 export PATH=$PATH:/usr/local/go/bin
-
+export GOBIN=/usr/local/bin/
+export PIPX_HOME=/usr/local/share/pipx
+export PIPX_BIN_DIR=/usr/local/bin
+export PIPX_MAN_DIR=/usr/local/share/man
 # =============================================================================
 
 cu_install lsd-rs/lsd!
@@ -54,21 +57,42 @@ if [[ "$CPU" == "amd64" ]]; then
 fi
 
 # =============================================================================
-export PIPX_HOME=/usr/local/share/pipx
-export PIPX_BIN_DIR=/usr/local/bin
-export PIPX_MAN_DIR=/usr/local/share/man
+
 pipx install bbrf
 pipx install sqlmap
 pipx install waymore
+pipx install wafw00f
+pipx install xnLinkFinder
+pipx install git+https://github.com/xnl-h4ck3r/urless.git
+pipx install git+https://github.com/commixproject/commix.git
+
+# pipx install git+https://github.com/s0md3v/Corsy.git
+# pipx install git+https://github.com/r0075h3ll/Oralyzer.git
+# pipx install git+https://github.com/Tuhinshubhra/CMSeeK.git
+
 go install -v github.com/minio/mc@latest
-go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
-go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
-go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
-go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
+go install -v github.com/projectdiscovery/pdtm/cmd/pdtm@latest && pdtm -install-all
 go install -v github.com/ffuf/ffuf/v2@latest
 go install -v github.com/tomnomnom/anew@latest
+go install -v github.com/tomnomnom/qsreplace@latest
+go install -v github.com/tomnomnom/unfurl@v0.3.0
+go install -v github.com/tomnomnom/gron@latest
+go install -v github.com/tomnomnom/httprobe@latest
+go install -v github.com/tomnomnom/meg@latest
 go install -v github.com/denandz/sourcemapper@latest
+go install -v github.com/s0md3v/smap/cmd/smap@latest
+go install -v github.com/dwisiswant0/crlfuzz/cmd/crlfuzz@latest
+go install -v github.com/d3mondev/puredns/v2@latest # with wildcards
+go install -v github.com/hahwul/dalfox/v2@latest
+go install -v github.com/lc/subjs@latest
+go install -v github.com/Josue87/gotator@latest
+go install -v github.com/Hackmanit/Web-Cache-Vulnerability-Scanner@latest
+go install -v github.com/lobuhi/byp4xx@latest
+go install -v github.com/hakluke/hakip2host@latest
+go install -v github.com/lc/gau/v2/cmd/gau@latest
+go install -v github.com/sa7mon/s3scanner@latest
 gh_pull sqlmapproject/sqlmap /opt/sqlmap
+cu_install owasp-dwisiswant0/ppfuzz!
 cu_install owasp-amass/amass!
 cu_install epi052/feroxbuster!
 
@@ -81,3 +105,8 @@ curl -Lo onelistforallmicro.txt https://raw.githubusercontent.com/six2dez/OneLis
 #   && rm -f SecList.zip
 
 rm -rf /tmp/*
+rm -rf /root/.cache
+rm -rf /root/go
+
+# mkdir -p /home/init
+# cp -r ~/* /home/init/
