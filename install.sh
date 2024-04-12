@@ -48,7 +48,10 @@ cu_install jpillora/chisel!
 cu_install ajeetdsouza/zoxide!
 cu_install BurntSushi/ripgrep!?as=rg
 gh_pull junegunn/fzf /opt/fzf && /opt/fzf/install
-gh_deb httpie/cli '.*deb'
+
+if [[ "$CPU" == "amd64" ]]; then
+  gh_deb httpie/cli '.*deb'
+fi
 
 # =============================================================================
 export PIPX_HOME=/usr/local/share/pipx
