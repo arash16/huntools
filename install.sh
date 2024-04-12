@@ -9,6 +9,7 @@ function cu_install() {
 
 CPU=$(uname -m)
 [[ "$CPU" == "x86_64" ]] && CPU=amd64
+[[ "$CPU" == "aarch64" ]] && CPU=arm64
 
 function gh_deb() {
   echo; echo "##### $1 #####"
@@ -50,7 +51,13 @@ gh_pull junegunn/fzf /opt/fzf && /opt/fzf/install
 gh_deb httpie/cli '.*deb'
 
 # =============================================================================
-
+export PIPX_HOME=/usr/local/share/pipx
+export PIPX_BIN_DIR=/usr/local/bin
+export PIPX_MAN_DIR=/usr/local/share/man
+pipx install bbrf
+pipx install sqlmap
+pipx install waymore
+go install -v github.com/minio/mc@latest
 go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
 go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
