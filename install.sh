@@ -70,8 +70,10 @@ pipx install git+https://github.com/commixproject/commix.git
 # pipx install git+https://github.com/Tuhinshubhra/CMSeeK.git
 
 export GOBIN=/usr/local/bin/
+go install -v github.com/projectdiscovery/pdtm/cmd/pdtm@latest
+HOME=/usr/local pdtm -install-all -duc -bp $GOBIN
+
 go install -v github.com/minio/mc@latest
-go install -v github.com/projectdiscovery/pdtm/cmd/pdtm@latest && pdtm -install-all -bp $GOBIN
 go install -v github.com/ffuf/ffuf/v2@latest
 go install -v github.com/tomnomnom/anew@latest
 go install -v github.com/tomnomnom/qsreplace@latest
