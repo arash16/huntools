@@ -102,3 +102,5 @@ alias la='lsd -laA'
 alias ll='lsd -l'
 alias lt='lsd --tree'
 alias lst='lsd -l --tree --total-size'
+
+alias wgup='wg-quick up wg0'
