@@ -75,9 +75,9 @@ cu_install epi052/feroxbuster!
 mkdir /list
 cd /list
 curl -Lo onelistforallmicro.txt https://raw.githubusercontent.com/six2dez/OneListForAll/main/onelistforallmicro.txt
-curl -Lo onelistforallshort.txt https://raw.githubusercontent.com/six2dez/OneListForAll/main/onelistforallshort.txt
-curl -Lo SecList.zip https://github.com/danielmiessler/SecLists/archive/master.zip \
-  && unzip SecList.zip \
-  && rm -f SecList.zip
+# curl -Lo onelistforallshort.txt https://raw.githubusercontent.com/six2dez/OneListForAll/main/onelistforallshort.txt
+# curl -Lo SecList.zip https://github.com/danielmiessler/SecLists/archive/master.zip \
+#   && unzip SecList.zip \
+#   && rm -f SecList.zip
 
 rm -rf /tmp/*
