@@ -93,7 +93,9 @@ go install -v github.com/lobuhi/byp4xx@latest
 go install -v github.com/hakluke/hakip2host@latest
 go install -v github.com/lc/gau/v2/cmd/gau@latest
 go install -v github.com/sa7mon/s3scanner@latest
+go install -v github.com/detectify/page-fetch@latest
 cu_install epi052/feroxbuster!
+cu_install dwisiswant0/ppfuzz!
 cu_install owasp-amass/amass!
 
 mkdir /list
