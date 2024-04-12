@@ -36,28 +36,27 @@ curl -fLS install-node.vercel.app/lts | bash -s -- --yes
 curl -Lo go.tar.gz https://go.dev/dl/go1.22.2.linux-${CPU}.tar.gz
 tar -C /usr/local -xzf go.tar.gz
 export PATH=$PATH:/usr/local/go/bin
-export GOBIN=/usr/local/bin/
-export PIPX_HOME=/usr/local/share/pipx
-export PIPX_BIN_DIR=/usr/local/bin
-export PIPX_MAN_DIR=/usr/local/share/man
 # =============================================================================
 
-cu_install lsd-rs/lsd!
-cu_install sharkdp/bat!
-cu_install sharkdp/fd!
-cu_install noborus/ov!
 cu_install mikefarah/yq!
 cu_install jpillora/chisel!
-cu_install ajeetdsouza/zoxide!
-cu_install BurntSushi/ripgrep!?as=rg
-gh_pull junegunn/fzf /opt/fzf && /opt/fzf/install
-
+gh_deb lsd-rs/lsd
+gh_deb sharkdp/bat
+gh_deb sharkdp/fd
+gh_deb noborus/ov
+gh_deb ajeetdsouza/zoxide
+gh_deb BurntSushi/ripgrep
 if [[ "$CPU" == "amd64" ]]; then
   gh_deb httpie/cli '.*deb'
 fi
 
+gh_pull junegunn/fzf /opt/fzf && /opt/fzf/install
+
 # =============================================================================
 
+export PIPX_HOME=/usr/local/share/pipx
+export PIPX_BIN_DIR=/usr/local/bin
+export PIPX_MAN_DIR=/usr/local/share/man
 pipx install bbrf
 pipx install sqlmap
 pipx install waymore
@@ -70,12 +69,13 @@ pipx install git+https://github.com/commixproject/commix.git
 # pipx install git+https://github.com/r0075h3ll/Oralyzer.git
 # pipx install git+https://github.com/Tuhinshubhra/CMSeeK.git
 
+export GOBIN=/usr/local/bin/
 go install -v github.com/minio/mc@latest
-go install -v github.com/projectdiscovery/pdtm/cmd/pdtm@latest && pdtm -install-all
+go install -v github.com/projectdiscovery/pdtm/cmd/pdtm@latest && pdtm -install-all -bp $GOBIN
 go install -v github.com/ffuf/ffuf/v2@latest
 go install -v github.com/tomnomnom/anew@latest
 go install -v github.com/tomnomnom/qsreplace@latest
-go install -v github.com/tomnomnom/unfurl@v0.3.0
+go install -v github.com/tomnomnom/unfurl@latest
 go install -v github.com/tomnomnom/gron@latest
 go install -v github.com/tomnomnom/httprobe@latest
 go install -v github.com/tomnomnom/meg@latest
@@ -91,10 +91,8 @@ go install -v github.com/lobuhi/byp4xx@latest
 go install -v github.com/hakluke/hakip2host@latest
 go install -v github.com/lc/gau/v2/cmd/gau@latest
 go install -v github.com/sa7mon/s3scanner@latest
-gh_pull sqlmapproject/sqlmap /opt/sqlmap
-cu_install owasp-dwisiswant0/ppfuzz!
-cu_install owasp-amass/amass!
 cu_install epi052/feroxbuster!
+cu_install owasp-amass/amass!
 
 mkdir /list
 cd /list
@@ -104,9 +102,6 @@ curl -Lo onelistforallmicro.txt https://raw.githubusercontent.com/six2dez/OneLis
 #   && unzip SecList.zip \
 #   && rm -f SecList.zip
 
-rm -rf /tmp/*
-rm -rf /root/.cache
-rm -rf /root/go
-
-# mkdir -p /home/init
-# cp -r ~/* /home/init/
+cp -r ~/.oh-my-zsh /opt/omz
+rm -rf /root /tmp
+mkdir -p /root/.local /tmp

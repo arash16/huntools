@@ -4,7 +4,7 @@ export PATH="$HOME/.local/bin:/usr/local/go/bin:$PATH"
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+export ZSH="/opt/omz"
 
 export COLORTERM=truecolor
 export NNN_FIFO=/tmp/nnn.fifo

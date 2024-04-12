@@ -24,6 +24,5 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 COPY install.sh /tmp/install.sh
 RUN /tmp/install.sh
 
-COPY .zshrc /root/
-
-ENTRYPOINT ["zsh"]
+COPY configs /opt/configs
+ENTRYPOINT ["/opt/configs/entry.sh"]
