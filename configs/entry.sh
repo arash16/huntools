@@ -3,6 +3,13 @@
 cd
 CONFIGS=/opt/configs
 
+function gh_pull() {
+  echo; echo "##### $1 #####"
+  if [[ ! -d "$2" ]]; then
+    git clone --depth=1 "https://github.com/$1.git" $2
+  fi
+}
+
 ############ Config zsh ############
 if [[ ! -f "$HOME/.zshrc" ]]; then
   cp $CONFIGS/.zshrc $HOME/
