@@ -30,27 +30,17 @@ function gh_pull() {
   fi
 }
 
-function gh_install() {
-  gh_pull $1 $2
-  cd $2
-  if [ -s "requirements.txt" ]; then
-      pip3 install -r requirements.txt --break-system-packages
-  fi
-  if [ -s "setup.py" ]; then
-      pip3 install . --break-system-packages
-  fi
-  cd -
-}
-
-# =============================================================================
-
+# ============================= Install go & node =============================
 # curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
 curl -fLS install-node.vercel.app/lts | bash -s -- --yes
+npm -g install yarn
+
 curl -Lo go.tar.gz https://go.dev/dl/go1.22.2.linux-${CPU}.tar.gz
 tar -C /usr/local -xzf go.tar.gz
 export PATH=$PATH:/usr/local/go/bin
 # =============================================================================
 
+# ============================ Install bash tools =============================
 mkdir -p /wgcf
 curl -fsSL git.io/wgcf.sh | bash
 
@@ -68,20 +58,35 @@ fi
 
 gh_pull junegunn/fzf /opt/fzf && /opt/fzf/install
 
+yarn global add zx pm2 nodemon ngrok http-server torrent \
+  tldr fkill vtop pipeable-js iponmap pageres-cli speed-test
 # =============================================================================
 
+# ============================ Install Downloaders ============================
+cd /tmp
+curl -s https://api.github.com/repos/aria2/aria2/releases/latest \
+  | grep -m1 "browser_download_url.*tar\\.gz" \
+  | cut -d : -f 2,3 \
+  | tr -d \" \
+  | wget -O aria2.tar.gz -i -
+tar -xvf aria2.tar.gz
+cd $(ls -d aria2-*)
+./configure
+make install
+
+cd /tmp
+sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
+sudo chmod a+rx /usr/local/bin/youtube-dl
+# =============================================================================
+
+# =========================== Install Google Chrome ===========================
 curl -Lo /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 apt install -y /tmp/chrome.deb
-
 # =============================================================================
 
+# =========================== Install Hunter Tools ============================
 pip3 install bbrf sqlmap waymore wafw00f xnLinkFinder arjun commix urless
-pip3 install git+https://github.com/Tuhinshubhra/CMSeeK.git
 
-# gh_install Tuhinshubhra/CMSeeK /opt/CMSeeK
-# pipx install git+https://github.com/s0md3v/Corsy.git
-# pipx install git+https://github.com/r0075h3ll/Oralyzer.git
-# pipx install git+https://github.com/Tuhinshubhra/CMSeeK.git
 export GOBIN=/usr/local/bin/
 go install -v github.com/projectdiscovery/pdtm/cmd/pdtm@latest
 HOME=/usr/local pdtm -install-all -duc -bp $GOBIN
@@ -111,12 +116,23 @@ cu_install epi052/feroxbuster!
 cu_install dwisiswant0/ppfuzz!
 cu_install owasp-amass/amass!
 
+function gh_install() {
+  gh_pull $1 $2
+  cd $2
+  if [ -s "requirements.txt" ]; then
+      pip3 install -r requirements.txt
+  fi
+  if [ -s "setup.py" ]; then
+      pip3 install .
+  fi
+  cd -
+}
+gh_install s0md3v/Corsy /opt/Corsy
+gh_install Tuhinshubhra/CMSeeK /opt/CMSeeK
+gh_install r0075h3ll/Oralyzer /opt/Oralyzer
 # =============================================================================
 
-
-
-# =============================================================================
-
+# ============================== Pull WordLists ===============================
 mkdir /list
 cd /list
 curl -Lo onelistforallmicro.txt https://raw.githubusercontent.com/six2dez/OneListForAll/main/onelistforallmicro.txt
@@ -124,7 +140,9 @@ curl -Lo onelistforallmicro.txt https://raw.githubusercontent.com/six2dez/OneLis
 # curl -Lo SecList.zip https://github.com/danielmiessler/SecLists/archive/master.zip \
 #   && unzip SecList.zip \
 #   && rm -f SecList.zip
+# =============================================================================
 
+# ============================= Config & Cleanup ==============================
 cp -r ~/.oh-my-zsh /opt/omz
 yq shell-completion zsh > /opt/omz/custom/plugins/zsh-autocomplete/Completions/_yq
 dalfox completion zsh > /opt/omz/custom/plugins/zsh-autocomplete/Completions/_dalfox
