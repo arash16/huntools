@@ -76,12 +76,16 @@ zstyle ':omz:update' mode disabled  # disable automatic updates
 zstyle ':completion:*:*:docker:*' option-stacking yes
 zstyle ':completion:*:*:docker-*:*' option-stacking yes
 
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/mc mc
+
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  fzf ripgrep z git
+  fzf ripgrep z git httpie
   zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting
   docker docker-compose
 )

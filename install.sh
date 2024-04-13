@@ -57,6 +57,11 @@ gh_pull junegunn/fzf /opt/fzf && /opt/fzf/install
 
 # =============================================================================
 
+curl -Lo /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+apt install -y /tmp/chrome.deb
+
+# =============================================================================
+
 export PIPX_HOME=/usr/local/share/pipx
 export PIPX_BIN_DIR=/usr/local/bin
 export PIPX_MAN_DIR=/usr/local/share/man
@@ -65,8 +70,9 @@ pipx install sqlmap
 pipx install waymore
 pipx install wafw00f
 pipx install xnLinkFinder
+pipx install arjun # param discovery
 pipx install git+https://github.com/xnl-h4ck3r/urless.git
-pipx install git+https://github.com/commixproject/commix.git
+pipx install git+https://github.com/commixproject/commix.git # error
 
 # pipx install git+https://github.com/s0md3v/Corsy.git
 # pipx install git+https://github.com/r0075h3ll/Oralyzer.git
@@ -87,7 +93,7 @@ go install -v github.com/tomnomnom/meg@latest
 go install -v github.com/denandz/sourcemapper@latest
 go install -v github.com/s0md3v/smap/cmd/smap@latest
 go install -v github.com/dwisiswant0/crlfuzz/cmd/crlfuzz@latest
-go install -v github.com/d3mondev/puredns/v2@latest # with wildcards
+go install -v github.com/d3mondev/puredns/v2@latest # dns with wildcards
 go install -v github.com/hahwul/dalfox/v2@latest
 go install -v github.com/lc/subjs@latest
 go install -v github.com/Josue87/gotator@latest
@@ -110,6 +116,9 @@ curl -Lo onelistforallmicro.txt https://raw.githubusercontent.com/six2dez/OneLis
 #   && rm -f SecList.zip
 
 cp -r ~/.oh-my-zsh /opt/omz
+yq shell-completion zsh > /opt/omz/custom/plugins/zsh-autocomplete/Completions/_yq
+dalfox completion zsh > /opt/omz/custom/plugins/zsh-autocomplete/Completions/_dalfox
+
 rm -rf /root /tmp
 mkdir -p /root/.local /tmp
 chsh -s $(which zsh)
