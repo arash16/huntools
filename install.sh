@@ -2,6 +2,7 @@
 set -xe
 cd /tmp
 git config --global core.compression 9
+export DEBIAN_FRONTEND=noninteractive
 
 function cu_install() {
   curl https://i.jpillora.com/$1 | bash
@@ -27,6 +28,18 @@ function gh_pull() {
   if [[ ! -d "$2" ]]; then
     git clone --depth=1 "https://github.com/$1.git" $2
   fi
+}
+
+function gh_install() {
+  gh_pull $1 $2
+  cd $2
+  if [ -s "requirements.txt" ]; then
+      pip3 install -r requirements.txt --break-system-packages
+  fi
+  if [ -s "setup.py" ]; then
+      pip3 install . --break-system-packages
+  fi
+  cd -
 }
 
 # =============================================================================
@@ -62,22 +75,13 @@ apt install -y /tmp/chrome.deb
 
 # =============================================================================
 
-export PIPX_HOME=/usr/local/share/pipx
-export PIPX_BIN_DIR=/usr/local/bin
-export PIPX_MAN_DIR=/usr/local/share/man
-pipx install bbrf
-pipx install sqlmap
-pipx install waymore
-pipx install wafw00f
-pipx install xnLinkFinder
-pipx install arjun # param discovery
-pipx install git+https://github.com/xnl-h4ck3r/urless.git
-pipx install git+https://github.com/commixproject/commix.git # error
+pip3 install bbrf sqlmap waymore wafw00f xnLinkFinder arjun commix urless
+pip3 install git+https://github.com/Tuhinshubhra/CMSeeK.git
 
+# gh_install Tuhinshubhra/CMSeeK /opt/CMSeeK
 # pipx install git+https://github.com/s0md3v/Corsy.git
 # pipx install git+https://github.com/r0075h3ll/Oralyzer.git
 # pipx install git+https://github.com/Tuhinshubhra/CMSeeK.git
-
 export GOBIN=/usr/local/bin/
 go install -v github.com/projectdiscovery/pdtm/cmd/pdtm@latest
 HOME=/usr/local pdtm -install-all -duc -bp $GOBIN
@@ -106,6 +110,12 @@ go install -v github.com/detectify/page-fetch@latest
 cu_install epi052/feroxbuster!
 cu_install dwisiswant0/ppfuzz!
 cu_install owasp-amass/amass!
+
+# =============================================================================
+
+
+
+# =============================================================================
 
 mkdir /list
 cd /list

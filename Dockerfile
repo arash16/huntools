@@ -1,12 +1,14 @@
-FROM ubuntu:24.04
+FROM ubuntu:22.04
 
+ENV TZ=Asia/Tehran
 RUN apt-get -y update
-RUN print 'y\ny\n' | unminimize \
+RUN export DEBIAN_FRONTEND=noninteractive; \
+  (echo y;echo y) | unminimize \
   && apt-get -y install \
     sudo apt-transport-https \
     zsh binutils gcc cmake build-essential bsdmainutils \
     libpcap-dev libssl-dev libffi-dev libxml2-dev libxml2-utils libxslt1-dev zlib1g-dev libdata-hexdump-perl \
-    python3 python3-dev python3-pip python3-virtualenv python3-setuptools pipx \
+    python3 python3-full python3-dev python3-pip python3-virtualenv python3-setuptools \
     ca-certificates curl wget xsel urlview vim vim-gtk3 tmux jq \
     net-tools wireguard-tools iproute2 iptables openvpn nmap \
     dnsutils inetutils-ping whois \
