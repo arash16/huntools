@@ -1,8 +1,33 @@
 #!/bin/bash -e
 set -xe
 cd /tmp
-git config --global core.compression 9
+
+# ============================= Install base apts =============================
 export DEBIAN_FRONTEND=noninteractive
+# (echo y;echo y) | unminimize
+apt-get -y update
+apt-get -y install \
+    sudo apt-transport-https \
+    zsh binutils gcc cmake build-essential bsdmainutils \
+    libpcap-dev libssl-dev libffi-dev libxml2-dev libxml2-utils libxslt1-dev zlib1g-dev libdata-hexdump-perl \
+    python3 python3-dev python3-pip python3-virtualenv python3-setuptools \
+    ca-certificates curl wget xsel urlview vim vim-gtk3 tmux jq \
+    net-tools wireguard-tools iproute2 iptables openvpn nmap \
+    dnsutils inetutils-ping whois \
+    procps bbe git file \
+    zip unzip gzip bzip2 tar unrar \
+    ruby pv lynx xvfb medusa
+
+sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
+    -p https://github.com/zsh-users/zsh-autosuggestions \
+    -p https://github.com/zsh-users/zsh-syntax-highlighting \
+    -p https://github.com/zdharma-continuum/fast-syntax-highlighting \
+    -p https://github.com/marlonrichert/zsh-autocomplete \
+    -x
+# =============================================================================
+
+# ============================== Base functions ===============================
+git config --global core.compression 9
 
 function cu_install() {
   curl https://i.jpillora.com/$1 | bash
@@ -29,6 +54,7 @@ function gh_pull() {
     git clone --depth=1 "https://github.com/$1.git" $2
   fi
 }
+# =============================================================================
 
 # ============================= Install go & node =============================
 # curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
@@ -80,12 +106,12 @@ sudo chmod a+rx /usr/local/bin/youtube-dl
 # =============================================================================
 
 # =========================== Install Google Chrome ===========================
-curl -Lo /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-apt install -y /tmp/chrome.deb
+# curl -Lo /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+# apt install -y /tmp/chrome.deb
 # =============================================================================
 
 # =========================== Install Hunter Tools ============================
-pip3 install bbrf sqlmap waymore wafw00f xnLinkFinder arjun commix urless
+pip3 install bbrf sqlmap waymore wafw00f xnLinkFinder arjun commix urless xonsh[full]
 
 export GOBIN=/usr/local/bin/
 go install -v github.com/projectdiscovery/pdtm/cmd/pdtm@latest
@@ -147,6 +173,13 @@ cp -r ~/.oh-my-zsh /opt/omz
 yq shell-completion zsh > /opt/omz/custom/plugins/zsh-autocomplete/Completions/_yq
 dalfox completion zsh > /opt/omz/custom/plugins/zsh-autocomplete/Completions/_dalfox
 
-rm -rf /root /tmp
+go clean -x -cache -modcache
+yarn cache clean
+pip3 cache purge
+apt autoremove
+apt autoclean
+apt purge
+apt clean
+rm -rf /root /tmp /usr/local/.cache /usr/local/share/.cache /usr/local/go/pkg/mod
 mkdir -p /root/.local /tmp
 chsh -s $(which zsh)
