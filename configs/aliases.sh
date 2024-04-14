@@ -17,3 +17,4 @@ alias lt='lsd --tree'
 alias lst='lsd -l --tree --total-size'
 
 alias wgup='wg-quick up wg0'
+alias wgdown='wg-quick down wg0'
