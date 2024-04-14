@@ -11,7 +11,7 @@ apt-get -y install \
     zsh binutils gcc cmake build-essential bsdmainutils \
     libpcap-dev libssl-dev libffi-dev libxml2-dev libxml2-utils libxslt1-dev zlib1g-dev libdata-hexdump-perl \
     python3 python3-dev python3-pip python3-virtualenv python3-setuptools \
-    net-tools wireguard-tools iproute2 iptables openvpn nmap \
+    net-tools wireguard-tools iproute2 iptables resolvconf openvpn nmap \
     curl wget xsel urlview vim vim-gtk3 tmux jq \
     zip unzip gzip bzip2 tar unrar \
     dnsutils inetutils-ping whois \
