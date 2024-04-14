@@ -16,7 +16,7 @@ apt-get -y install \
     dnsutils inetutils-ping whois \
     procps bbe git file \
     zip unzip gzip bzip2 tar unrar \
-    ruby pv lynx xvfb medusa
+    ruby pv lynx medusa
 
 sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
     -p https://github.com/zsh-users/zsh-autosuggestions \
@@ -113,6 +113,11 @@ sudo chmod a+rx /usr/local/bin/youtube-dl
 # =========================== Install Hunter Tools ============================
 pip3 install bbrf sqlmap waymore wafw00f xnLinkFinder arjun commix urless xonsh[full]
 
+gh_pull blechschmidt/massdns /tmp/massdns
+cd /tmp/massdns
+make && make install
+cd /tmp
+
 export GOBIN=/usr/local/bin/
 go install -v github.com/projectdiscovery/pdtm/cmd/pdtm@latest
 HOME=/usr/local pdtm -install-all -duc -bp $GOBIN
@@ -180,6 +185,11 @@ apt autoremove
 apt autoclean
 apt purge
 apt clean
-rm -rf /root /tmp /usr/local/.cache /usr/local/share/.cache /usr/local/go/pkg/mod
+rm -rf \
+  /root /tmp \
+  /usr/local/.cache \
+  /usr/local/share/.cache \
+  /usr/local/go/pkg/mod \
+  /usr/lib/firmware
 mkdir -p /root/.local /tmp
 chsh -s $(which zsh)

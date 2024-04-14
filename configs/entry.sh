@@ -10,6 +10,9 @@ function gh_pull() {
   fi
 }
 
+########## No auto-checks ##########
+pdtm -duc
+
 ############ Config zsh ############
 if [[ ! -f "$HOME/.zshrc" ]]; then
   cp $CONFIGS/.zshrc $HOME/

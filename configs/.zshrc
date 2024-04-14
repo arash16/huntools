@@ -95,16 +95,4 @@ export LANG=en_US.UTF-8
 export EDITOR='vim'
 
 eval "$(zoxide init zsh)"
-
-export BAT_PAGER=
-alias cat=bat
-
-alias p=python3
-
-alias l=lsd
-alias la='lsd -laA'
-alias ll='lsd -l'
-alias lt='lsd --tree'
-alias lst='lsd -l --tree --total-size'
-
-alias wgup='wg-quick up wg0'
+source /opt/configs/aliases.sh
