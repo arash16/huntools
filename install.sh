@@ -9,14 +9,15 @@ apt-get -y update
 apt-get -y install \
     sudo apt-transport-https ca-certificates \
     zsh binutils gcc cmake build-essential bsdmainutils \
-    libpcap-dev libssl-dev libffi-dev libxml2-dev libxml2-utils libxslt1-dev zlib1g-dev libdata-hexdump-perl \
+    libpcap-dev libssl-dev libffi-dev libxml2-dev libxml2-utils libxslt1-dev zlib1g-dev libdata-hexdump-perl libyaml-dev \
     python3 python3-dev python3-pip python3-virtualenv python3-setuptools \
     net-tools wireguard-tools iproute2 iptables openresolv openvpn nmap \
     curl wget xsel urlview vim vim-gtk3 tmux jq \
     zip unzip gzip bzip2 tar unrar \
     dnsutils inetutils-ping whois \
+    ruby ruby-dev \
     procps bbe git file \
-    ruby pv lynx medusa
+    pv lynx medusa
 
 sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
     -p https://github.com/zsh-users/zsh-autosuggestions \
@@ -37,13 +38,17 @@ CPU=$(uname -m)
 [[ "$CPU" == "x86_64" ]] && CPU=amd64
 [[ "$CPU" == "aarch64" ]] && CPU=arm64
 
-function gh_deb() {
-  echo; echo "##### $1 #####"
+function gh_latest() {
   curl -s https://api.github.com/repos/$1/releases/latest \
-  | grep -m1 "browser_download_url${2:-".*${CPU}.*deb"}" \
+  | grep -m1 "browser_download_url$2" \
   | cut -d : -f 2,3 \
   | tr -d \" \
-  | wget -O /tmp/pkg.deb -i -
+  | wget -O $3 -i -
+}
+
+function gh_deb() {
+  echo; echo "##### $1 #####"
+  gh_latest $1 "${2:-".*${CPU}.*deb"}" /tmp/pkg.deb
   sudo dpkg -i /tmp/pkg.deb
   rm /tmp/pkg.deb
 }
@@ -57,6 +62,8 @@ function gh_pull() {
 # =============================================================================
 
 # ============================= Install go & node =============================
+gem install bundler
+
 # curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
 curl -fLS install-node.vercel.app/lts | bash -s -- --yes
 npm -g install yarn
@@ -85,16 +92,13 @@ fi
 gh_pull junegunn/fzf /opt/fzf && /opt/fzf/install
 
 yarn global add zx pm2 nodemon ngrok http-server torrent \
-  tldr fkill vtop pipeable-js iponmap pageres-cli speed-test
+  tldr fkill vtop pipeable-js iponmap pageres-cli speed-test \
+  retire
 # =============================================================================
 
 # ============================ Install Downloaders ============================
 cd /tmp
-curl -s https://api.github.com/repos/aria2/aria2/releases/latest \
-  | grep -m1 "browser_download_url.*tar\\.gz" \
-  | cut -d : -f 2,3 \
-  | tr -d \" \
-  | wget -O aria2.tar.gz -i -
+gh_latest aria2/aria2 ".*tar\\.gz" aria2.tar.gz
 tar -xvf aria2.tar.gz
 cd $(ls -d aria2-*)
 ./configure
@@ -116,6 +120,14 @@ pip3 install bbrf sqlmap waymore wafw00f xnLinkFinder arjun commix urless xonsh[
 gh_pull blechschmidt/massdns /tmp/massdns
 cd /tmp/massdns
 make && make install
+
+cd /opt
+curl -s https://api.github.com/repos/urbanadventurer/WhatWeb/releases/latest \
+| jq ".zipball_url" -r \
+| wget -O whatweb.zip -i -
+unzip whatweb.zip && rm whatweb.zip
+mv $(ls -d *WhatWeb*) WhatWeb && cd WhatWeb
+make install
 cd /tmp
 
 export GOBIN=/usr/local/bin/
@@ -130,6 +142,7 @@ go install -v github.com/tomnomnom/unfurl@latest
 go install -v github.com/tomnomnom/gron@latest
 go install -v github.com/tomnomnom/httprobe@latest
 go install -v github.com/tomnomnom/meg@latest
+go install -v github.com/OJ/gobuster@latest
 go install -v github.com/denandz/sourcemapper@latest
 go install -v github.com/s0md3v/smap/cmd/smap@latest
 go install -v github.com/dwisiswant0/crlfuzz/cmd/crlfuzz@latest
