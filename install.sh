@@ -196,10 +196,11 @@ dalfox completion zsh > /opt/omz/custom/plugins/zsh-autocomplete/Completions/_da
 go clean -x -cache -modcache
 yarn cache clean
 pip3 cache purge
-apt autoremove
-apt autoclean
-apt purge
-apt clean
+apt remove -y linux-firmware linux-modules-extra-5.15.0-1032-realtime linux-modules-5.15.0-1032-realtime
+apt autoremove -y
+apt autoclean -y
+apt purge -y
+apt clean -y
 rm -rf \
   /root /tmp \
   /usr/local/.cache \
@@ -208,3 +209,5 @@ rm -rf \
   /usr/lib/firmware
 mkdir -p /root/.local /tmp
 chsh -s $(which zsh)
+
+dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n
