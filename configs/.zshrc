@@ -85,9 +85,9 @@ complete -o nospace -C /usr/local/bin/mc mc
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+  fast-syntax-highlighting
   fzf ripgrep z git httpie
-  zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting
-  docker docker-compose
+  zsh-autocomplete zsh-autosuggestions
 )
 source $ZSH/oh-my-zsh.sh
 

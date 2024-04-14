@@ -4,18 +4,18 @@ cd /tmp
 
 # ============================= Install base apts =============================
 export DEBIAN_FRONTEND=noninteractive
-# (echo y;echo y) | unminimize
+(echo y;echo y) | unminimize
 apt-get -y update
 apt-get -y install \
-    sudo apt-transport-https \
+    sudo apt-transport-https ca-certificates \
     zsh binutils gcc cmake build-essential bsdmainutils \
     libpcap-dev libssl-dev libffi-dev libxml2-dev libxml2-utils libxslt1-dev zlib1g-dev libdata-hexdump-perl \
     python3 python3-dev python3-pip python3-virtualenv python3-setuptools \
-    ca-certificates curl wget xsel urlview vim vim-gtk3 tmux jq \
     net-tools wireguard-tools iproute2 iptables openvpn nmap \
+    curl wget xsel urlview vim vim-gtk3 tmux jq \
+    zip unzip gzip bzip2 tar unrar \
     dnsutils inetutils-ping whois \
     procps bbe git file \
-    zip unzip gzip bzip2 tar unrar \
     ruby pv lynx medusa
 
 sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
@@ -146,8 +146,10 @@ go install -v github.com/detectify/page-fetch@latest
 cu_install epi052/feroxbuster!
 cu_install dwisiswant0/ppfuzz!
 cu_install owasp-amass/amass!
+cu_install trufflesecurity/trufflehog! # repo search for tokens
 
-function gh_install() {
+
+function ghpy_install() {
   gh_pull $1 $2
   cd $2
   if [ -s "requirements.txt" ]; then
@@ -156,11 +158,24 @@ function gh_install() {
   if [ -s "setup.py" ]; then
       pip3 install .
   fi
+  echo 3: $3
+  if [[ ! -z "$3" ]]; then
+    echo 3: $3
+    NAME=$(echo "$1" | sed -E 's#.*/##' | awk '{print tolower($0)}')
+    cat > /usr/local/bin/$NAME <<EOF
+#!/usr/bin/env sh
+python3 $2/$3 \$@
+EOF
+    chmod +x /usr/local/bin/$NAME
+  fi
   cd -
 }
-gh_install s0md3v/Corsy /opt/Corsy
-gh_install Tuhinshubhra/CMSeeK /opt/CMSeeK
-gh_install r0075h3ll/Oralyzer /opt/Oralyzer
+ghpy_install s0md3v/Corsy /opt/Corsy corsy.py # cors issues finder
+ghpy_install Tuhinshubhra/CMSeeK /opt/CMSeeK cmseek.py # all cms analysis
+ghpy_install r0075h3ll/Oralyzer /opt/Oralyzer oralyzer.py # open-redirect finder
+ghpy_install landgrey/pydictor /opt/pydictor pydictor.py # pass-wordlist generator
+ghpy_install cramppet/regulator /opt/regulator main.py # pattern domains
+
 # =============================================================================
 
 # ============================== Pull WordLists ===============================
