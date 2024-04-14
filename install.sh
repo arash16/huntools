@@ -8,8 +8,9 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get -y update
 apt-get -y install \
     sudo apt-transport-https ca-certificates \
+    zlib1g-dev libdata-hexdump-perl libyaml-dev libreadline6-dev \
+    libpcap-dev libssl-dev libffi-dev libxml2-dev libxml2-utils libxslt1-dev \
     zsh binutils gcc cmake build-essential bsdmainutils \
-    libpcap-dev libssl-dev libffi-dev libxml2-dev libxml2-utils libxslt1-dev zlib1g-dev libdata-hexdump-perl libyaml-dev \
     python3 python3-dev python3-pip python3-virtualenv python3-setuptools \
     net-tools wireguard-tools iproute2 iptables openresolv openvpn nmap \
     curl wget xsel urlview vim vim-gtk3 tmux jq \
@@ -173,9 +174,8 @@ function ghpy_install() {
   if [ -s "setup.py" ]; then
       pip3 install .
   fi
-  echo 3: $3
+
   if [[ ! -z "$3" ]]; then
-    echo 3: $3
     NAME=$(echo "$1" | sed -E 's#.*/##' | awk '{print tolower($0)}')
     cat > /usr/local/bin/$NAME <<EOF
 #!/usr/bin/env sh
@@ -190,7 +190,7 @@ ghpy_install Tuhinshubhra/CMSeeK /opt/CMSeeK cmseek.py # all cms analysis
 ghpy_install r0075h3ll/Oralyzer /opt/Oralyzer oralyzer.py # open-redirect finder
 ghpy_install landgrey/pydictor /opt/pydictor pydictor.py # pass-wordlist generator
 ghpy_install cramppet/regulator /opt/regulator main.py # pattern domains
-ghpy_install swisskyrepo/GraphQLmap /opt/GraphQLmap
+ghpy_install swisskyrepo/GraphQLmap /tmp/GraphQLmap
 
 
 # =============================================================================
