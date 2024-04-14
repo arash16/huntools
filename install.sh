@@ -156,6 +156,8 @@ go install -v github.com/hakluke/hakip2host@latest
 go install -v github.com/lc/gau/v2/cmd/gau@latest
 go install -v github.com/sa7mon/s3scanner@latest
 go install -v github.com/detectify/page-fetch@latest
+go install -v github.com/rverton/webanalyze/cmd/webanalyze@latest && webanalyze -update
+go install github.com/praetorian-inc/fingerprintx/cmd/fingerprintx@latest
 cu_install epi052/feroxbuster!
 cu_install dwisiswant0/ppfuzz!
 cu_install owasp-amass/amass!
@@ -188,6 +190,8 @@ ghpy_install Tuhinshubhra/CMSeeK /opt/CMSeeK cmseek.py # all cms analysis
 ghpy_install r0075h3ll/Oralyzer /opt/Oralyzer oralyzer.py # open-redirect finder
 ghpy_install landgrey/pydictor /opt/pydictor pydictor.py # pass-wordlist generator
 ghpy_install cramppet/regulator /opt/regulator main.py # pattern domains
+ghpy_install swisskyrepo/GraphQLmap /opt/GraphQLmap
+
 
 # =============================================================================
 
