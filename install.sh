@@ -94,7 +94,7 @@ gh_pull junegunn/fzf /opt/fzf && /opt/fzf/install
 
 yarn global add zx pm2 nodemon ngrok http-server torrent \
   tldr fkill vtop pipeable-js iponmap pageres-cli speed-test \
-  retire
+  retire rtail
 # =============================================================================
 
 # ============================ Install Downloaders ============================
