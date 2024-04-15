@@ -80,12 +80,12 @@ curl -fsSL git.io/wgcf.sh | bash
 
 cu_install mikefarah/yq!
 cu_install jpillora/chisel!
+cu_install BurntSushi/ripgrep!?as=rg
 gh_deb lsd-rs/lsd
 gh_deb sharkdp/bat
 gh_deb sharkdp/fd
 gh_deb noborus/ov
 gh_deb ajeetdsouza/zoxide
-gh_deb BurntSushi/ripgrep
 if [[ "$CPU" == "amd64" ]]; then
   gh_deb httpie/cli '.*deb'
 fi
