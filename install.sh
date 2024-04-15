@@ -190,8 +190,10 @@ ghpy_install Tuhinshubhra/CMSeeK /opt/CMSeeK cmseek.py # all cms analysis
 ghpy_install r0075h3ll/Oralyzer /opt/Oralyzer oralyzer.py # open-redirect finder
 ghpy_install landgrey/pydictor /opt/pydictor pydictor.py # pass-wordlist generator
 ghpy_install cramppet/regulator /opt/regulator main.py # pattern domains
-ghpy_install swisskyrepo/GraphQLmap /tmp/GraphQLmap
 
+if [[ "$CPU" == "amd64" ]]; then
+  ghpy_install swisskyrepo/GraphQLmap /tmp/GraphQLmap
+fi
 
 # =============================================================================
 
