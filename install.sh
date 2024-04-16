@@ -212,6 +212,12 @@ cp -r ~/.oh-my-zsh /opt/omz
 yq shell-completion zsh > /opt/omz/custom/plugins/zsh-autocomplete/Completions/_yq
 dalfox completion zsh > /opt/omz/custom/plugins/zsh-autocomplete/Completions/_dalfox
 
+mkdir -p /opt/scripts
+cd /opt/scripts
+echo '{ "dependencies": { "zx": "*" } }' > package.json
+yarn install
+cd /tmp
+
 go clean -x -cache -modcache
 yarn cache clean
 pip3 cache purge
